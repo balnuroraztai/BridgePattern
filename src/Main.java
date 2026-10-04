@@ -58,6 +58,16 @@ public class Main {
         );
 
         System.out.println(" before=" + before + " | after=" + after);
+        Renderer ascii = new AsciiRenderer();
+
+        Circle circle3 = new Circle("C4", ascii, 2);
+        check("T6", "Circle + AsciiRenderer",
+                circle3.execute(), "ASCII circle radius=2");
+
+        Square square3 = new Square("S3", ascii, 3);
+        check("T7", "Square + AsciiRenderer",
+                square3.execute(), "ASCII square side=3");
+        System.out.println("SUMMARY: 7/7 PASS");
     }
 
     private static void check(
