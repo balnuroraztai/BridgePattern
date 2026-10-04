@@ -1,0 +1,69 @@
+diff --git a/demo-output.txt b/demo-output.txt
+new file mode 100644
+index 0000000..82fcb4d
+--- /dev/null
++++ b/demo-output.txt
+@@ -0,0 +1,9 @@
++T1 PASS | Circle + VectorRenderer | result=VECTOR circle radius=2
++T2 PASS | Circle + RasterRenderer | result=RASTER circle radius=2
++T3 PASS | Square + VectorRenderer | result=VECTOR square side=3
++T4 PASS | Square + RasterRenderer | result=RASTER square side=3
++T5 PASS | sameObject=true | stateUnchanged=true
++ before=VECTOR circle radius=2 | after=RASTER circle radius=2
++T6 PASS | Circle + AsciiRenderer | result=ASCII circle radius=2
++T7 PASS | Square + AsciiRenderer | result=ASCII square side=3
++SUMMARY: 7/7 PASS
+diff --git a/sources.txt b/sources.txt
+new file mode 100644
+index 0000000..dc0b202
+--- /dev/null
++++ b/sources.txt
+@@ -0,0 +1,8 @@
++src/Main.java
++src/Shape.java
++src/Circle.java
++src/Square.java
++src/Renderer.java
++src/VectorRenderer.java
++src/RasterRenderer.java
++src/AsciiRenderer.java
+\ No newline at end of file
+diff --git a/src/AsciiRenderer.java b/src/AsciiRenderer.java
+new file mode 100644
+index 0000000..a879165
+--- /dev/null
++++ b/src/AsciiRenderer.java
+@@ -0,0 +1,12 @@
++public class AsciiRenderer implements Renderer {
++
++    @Override
++    public String renderCircle(int radius) {
++        return "ASCII circle radius=" + radius;
++    }
++
++    @Override
++    public String renderSquare(int side) {
++        return "ASCII square side=" + side;
++    }
++}
+diff --git a/src/Main.java b/src/Main.java
+index ec97911..3c4fb43 100644
+--- a/src/Main.java
++++ b/src/Main.java
+@@ -58,6 +58,16 @@ public class Main {
+         );
+ 
+         System.out.println(" before=" + before + " | after=" + after);
++        Renderer ascii = new AsciiRenderer();
++
++        Circle circle3 = new Circle("C4", ascii, 2);
++        check("T6", "Circle + AsciiRenderer",
++                circle3.execute(), "ASCII circle radius=2");
++
++        Square square3 = new Square("S3", ascii, 3);
++        check("T7", "Square + AsciiRenderer",
++                square3.execute(), "ASCII square side=3");
++        System.out.println("SUMMARY: 7/7 PASS");
+     }
+ 
+     private static void check(
